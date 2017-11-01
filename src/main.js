@@ -14,6 +14,16 @@ import zhLocale from 'iview/src/locale/lang/zh-CN';
 import enLocale from 'iview/src/locale/lang/en-US';
 import zhTLocale from 'iview/src/locale/lang/zh-TW';
 
+//mengwei add 8 line 20171101
+import axios from 'axios';
+import qs from 'qs'
+axios.defaults.withCredentials = true
+axios.defaults.headers.post['x-requested-with'] = 'XMLHttpRequest'
+axios.defaults.transformRequest = [function(data) {
+  return qs.stringify(data)
+}];
+Vue.prototype.$http = axios;
+
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueI18n);

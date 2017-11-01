@@ -1,5 +1,5 @@
 <style lang="less">
-    @import './login.less';
+@import "./login.less";
 </style>
 
 <template>
@@ -12,8 +12,8 @@
                 </p>
                 <div class="form-con">
                     <Form ref="loginForm" :model="form" :rules="rules">
-                        <FormItem prop="userName">
-                            <Input v-model="form.userName" placeholder="请输入用户名">
+                        <FormItem prop="username">
+                            <Input v-model="form.username" placeholder="请输入用户名">
                                 <span slot="prepend">
                                     <Icon :size="16" type="person"></Icon>
                                 </span>
@@ -38,43 +38,52 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 export default {
-    data () {
-        return {
-            form: {
-                userName: 'iview_admin',
-                password: ''
-            },
-            rules: {
-                userName: [
-                    { required: true, message: '账号不能为空', trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: '密码不能为空', trigger: 'blur' }
-                ]
+  data() {
+    return {
+      form: {
+        username: "iview_admin",
+        password: "111111"
+      },
+      rules: {
+        username: [{ required: true, message: "账号不能为空", trigger: "blur" }],
+        password: [{ required: true, message: "密码不能为空", trigger: "blur" }]
+      }
+    };
+  },
+  methods: {
+    handleSubmit() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$http.post("/user/login.json", this.form).then(result => {
+            console.log(JSON.stringify(result));
+            if (result.data.code == 0) {
+              Cookies.set("user", this.form.username);
+              Cookies.set("password", this.form.password);
+              this.$store.commit(
+                "setAvator",
+                "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg"
+              );
+              if (this.form.username === "iview_admin") {
+                Cookies.set("access", 0);
+              } else {
+                Cookies.set("access", 1);
+              }
+              this.$router.push({
+                name: "home_index"
+              });
+            } else {
+              this.$Modal.error({
+                title: result.data.title,
+                content: result.data.message
+              });
             }
-        };
-    },
-    methods: {
-        handleSubmit () {
-            this.$refs.loginForm.validate((valid) => {
-                if (valid) {
-                    Cookies.set('user', this.form.userName);
-                    Cookies.set('password', this.form.password);
-                    this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
-                    if (this.form.userName === 'iview_admin') {
-                        Cookies.set('access', 0);
-                    } else {
-                        Cookies.set('access', 1);
-                    }
-                    this.$router.push({
-                        name: 'home_index'
-                    });
-                }
-            });
+          });
         }
+      });
     }
+  }
 };
 </script>
 
