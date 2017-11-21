@@ -1,5 +1,5 @@
 <style lang="less">
-    @import './404.less';
+@import "./404.less";
 </style>
 
 <template>
@@ -19,16 +19,16 @@
 
 <script>
 export default {
-    name: 'Error404',
-    methods: {
-        backPage () {
-            this.$router.go(-1);
-        },
-        goHome () {
-            this.$router.push({
-                name: 'home_index'
-            });
-        }
+  name: "Error404",
+  methods: {
+    backPage() {
+      this.$router.go(-1);
+    },
+    goHome() {
+      this.$router.push({
+        name: "home_index"
+      });
     }
+  }
 };
 </script>
