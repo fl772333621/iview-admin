@@ -1,6 +1,6 @@
 {
-  "name": "iview-admin",
-  "version": "1.1.3",
+  "name": "pear_fe",
+  "version": "0.0.1",
   "description": "a management bases on iview",
   "main": "index.js",
   "scripts": {
@@ -12,9 +12,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iview/iview-admin.git"
+    "url": "https://github.com/fl772333621/pear_fe.git"
   },
-  "author": "",
+  "author": "mengwei",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.15.3",
